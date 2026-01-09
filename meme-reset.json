@@ -4,22 +4,22 @@
   "memes": [
     {
       "title": "Doge",
-      "image": "images/memes/doge.png",
+      "image": "./images/memes/doge.png",
       "year": "2013"
     },
     {
       "title": "Trollface",
-      "image": "images/memes/trollface.png",
+      "image": "./images/memes/trollface.png",
       "year": "2008"
     },
     {
       "title": "Nyan Cat",
-      "image": "images/memes/nyan.gif",
+      "image": "./images/memes/nyan.gif",
       "year": "2011"
     },
     {
       "title": "Pepe Classic",
-      "image": "images/memes/pepe.png",
+      "image": "./images/memes/pepe.png",
       "year": "2014"
     }
   ]
