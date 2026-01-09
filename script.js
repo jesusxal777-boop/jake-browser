@@ -118,13 +118,13 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
         <div class="meme-card">
-          <img src="images/memes/nyan.png">
+          <img src="images/memes/nyan.gif">
           <h4>Nyan Cat</h4>
           <span>2011</span>
         </div>
 
         <div class="meme-card">
-          <img src="images/memes/pepe.png">
+          <img src="images/memes/pepe1767949779.png">
           <h4>Pepe (Classic)</h4>
           <span>2014</span>
         </div>
