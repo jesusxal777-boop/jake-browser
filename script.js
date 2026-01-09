@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("url");
   const jakeDiv = document.getElementById("jake-info");
 
-  // confirmar que el script carga
   console.log("Jake Browser listo");
   document.body.style.outline = "2px solid lime";
 
@@ -42,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // búsqueda externa
+    // búsqueda externa → nueva pestaña
     window.open(
       "https://duckduckgo.com/?q=" + encodeURIComponent(q),
       "_blank"
@@ -90,50 +89,31 @@ document.addEventListener("DOMContentLoaded", () => {
     iframe.style.display = "none";
     jakeDiv.classList.remove("hidden");
 
-    jakeDiv.innerHTML = `
-      <h1>🌀 The Great Meme Reset</h1>
+    fetch("./meme-reset.json")
+      .then(res => res.json())
+      .then(data => {
+        let html = `
+          <h1>🌀 ${data.title}</h1>
+          <p>${data.description}</p>
+          <div class="meme-grid">
+        `;
 
-      <p>
-        El <b>Great Meme Reset</b> es una idea/meme sobre el colapso de los memes
-        modernos y el regreso a los memes simples, absurdos y sin sentido de la
-        vieja internet.
-      </p>
+        data.memes.forEach(m => {
+          html += `
+            <div class="meme-card">
+              <img src="${m.image}" alt="${m.title}" onerror="this.src='./images/memes/missing.png'">
+              <h4>${m.title}</h4>
+              <span>${m.year}</span>
+            </div>
+          `;
+        });
 
-      <p>
-        Menos marcas, menos ironía forzada, más imágenes mal recortadas
-        y humor puro.
-      </p>
-
-      <div class="meme-grid">
-        <div class="meme-card">
-          <img src="images/memes/trollface.png">
-          <h4>Trollface</h4>
-          <span>2008</span>
-        </div>
-
-        <div class="meme-card">
-          <img src="images/memes/doge.png">
-          <h4>Doge</h4>
-          <span>2013</span>
-        </div>
-
-        <div class="meme-card">
-          <img src="images/memes/nyan.gif">
-          <h4>Nyan Cat</h4>
-          <span>2011</span>
-        </div>
-
-        <div class="meme-card">
-          <img src="images/memes/pepe1767949779.png">
-          <h4>Pepe (Classic)</h4>
-          <span>2014</span>
-        </div>
-      </div>
-
-      <p style="margin-top:20px; font-style:italic;">
-        “Antes no entendíamos el meme… y eso era lo mejor.”
-      </p>
-    `;
+        html += "</div>";
+        jakeDiv.innerHTML = html;
+      })
+      .catch(err => {
+        jakeDiv.innerHTML = `<p>Error cargando memes: ${err.message}</p>`;
+      });
   }
 
   window.goBack = function () {
