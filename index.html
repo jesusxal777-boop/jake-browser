@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Jake Browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="top">
+  <button onclick="goBack()">⬅</button>
+  <button onclick="goForward()">➡</button>
+  <button onclick="reloadPage()">⟳</button>
+
+  <input id="url" placeholder="Buscar o escribir URL" />
+  <button onclick="go()">GO</button>
+</div>
+
+<iframe id="browser"></iframe>
+
+<div id="jake-info" class="hidden"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
