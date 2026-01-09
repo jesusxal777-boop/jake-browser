@@ -6,9 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const iframe = document.getElementById("browser");
   const input = document.getElementById("url");
   const jakeDiv = document.getElementById("jake-info");
+  const sideMenu = document.getElementById("side-menu");
 
   console.log("Jake Browser listo");
-  document.body.style.outline = "2px solid lime";
+
+  // tema default
+  setTheme('light');
 
   // búsqueda reciente siempre Jake
   input.value = "Jake";
@@ -64,10 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     jakeDiv.innerHTML = `
       <img src="images/jake.png" class="jake-img">
-
       <h1>Jake (Chileno)</h1>
       <p>Desarrollador, creador de mods, historias, apps y proyectos creativos.</p>
-
       <h3>¿Qué hace?</h3>
       <ul>
         <li>Mods para Minecraft Bedrock</li>
@@ -75,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
         <li>Lore e historias originales</li>
         <li>Experimentos web</li>
       </ul>
-
       <h3>Proyectos</h3>
       <ul>
         <li>Jake Browser</li>
@@ -92,11 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("./meme-reset.json")
       .then(res => res.json())
       .then(data => {
-        let html = `
-          <h1>🌀 ${data.title}</h1>
-          <p>${data.description}</p>
-          <div class="meme-grid">
-        `;
+        let html = `<h1>🌀 ${data.title}</h1><p>${data.description}</p><div class="meme-grid">`;
 
         data.memes.forEach(m => {
           html += `
@@ -133,5 +129,32 @@ document.addEventListener("DOMContentLoaded", () => {
   window.reloadPage = function () {
     if (iframe.src) iframe.src = iframe.src;
   };
+
+  // Menú hamburguesa
+  window.toggleMenu = function () {
+    sideMenu.classList.toggle("hidden");
+    if (!sideMenu.classList.contains("hidden")) {
+      sideMenu.style.right = "0";
+    } else {
+      sideMenu.style.right = "-250px";
+    }
+  };
+
+  // Cambiar tema
+  window.changeTheme = function (theme) {
+    setTheme(theme);
+    alert(`Tema cambiado a: ${theme}`);
+    toggleMenu();
+  };
+
+  function setTheme(theme) {
+    document.body.classList.remove("light","retro","meme","vaporwave","matrix");
+    document.body.classList.add(theme);
+    localStorage.setItem("jakeBrowserTheme", theme);
+  }
+
+  // Cargar tema guardado
+  const savedTheme = localStorage.getItem("jakeBrowserTheme");
+  if (savedTheme) setTheme(savedTheme);
 
 });
