@@ -1,0 +1,26 @@
+{
+  "title": "The Great Meme Reset",
+  "description": "El Great Meme Reset es la teoría/meme sobre el colapso de los memes modernos y el regreso a los memes simples, absurdos y sin sentido de la vieja internet.",
+  "memes": [
+    {
+      "title": "Doge",
+      "image": "images/memes/doge.png",
+      "year": "2013"
+    },
+    {
+      "title": "Trollface",
+      "image": "images/memes/trollface.png",
+      "year": "2008"
+    },
+    {
+      "title": "Nyan Cat",
+      "image": "images/memes/nyan.png",
+      "year": "2011"
+    },
+    {
+      "title": "Pepe Classic",
+      "image": "images/memes/pepe.png",
+      "year": "2014"
+    }
+  ]
+}
