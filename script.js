@@ -12,20 +12,18 @@ function go() {
   let q = input.value.trim();
   let qLower = q.toLowerCase();
 
-  // detectar búsquedas relacionadas contigo
+  // Jake / Chileno → perfil interno
   if (qLower.includes("jake") || qLower.includes("chileno")) {
     showJake();
     return;
   }
 
-  // si es URL
+  // URL directa
   if (qLower.startsWith("http")) {
     load(q);
   } else {
-    // abrir búsqueda en otra pestaña (DuckDuckGo)
-    window.open(
-      "https://duckduckgo.com/?q=" + encodeURIComponent(q),
-      "_blank"
-    );
+    // búsqueda externa (forma segura, no bloqueada)
+    location.href =
+      "https://duckduckgo.com/?q=" + encodeURIComponent(q);
   }
 }
