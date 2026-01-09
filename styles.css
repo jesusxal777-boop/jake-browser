@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: white;
+}
+
+.top {
+  display: flex;
+  gap: 5px;
+  padding: 8px;
+  background: #1c1c1c;
+}
+
+input {
+  flex: 1;
+  padding: 6px;
+  background: #111;
+  color: white;
+  border: 1px solid #333;
+}
+
+button {
+  background: #2b2b2b;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+iframe {
+  width: 100%;
+  height: calc(100vh - 50px);
+  border: none;
+  background: white;
+}
+
+.hidden {
+  display: none;
+}
+
+#jake-info {
+  padding: 20px;
+}
