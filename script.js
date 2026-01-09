@@ -7,100 +7,73 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("url");
   const jakeDiv = document.getElementById("jake-info");
 
-  console.log("SCRIPT CARGADO OK");
+  // confirmar que el script carga
+  console.log("Jake Browser listo");
   document.body.style.outline = "2px solid lime";
 
+  // búsqueda reciente siempre Jake
   input.value = "Jake";
 
-  // ===== BOTÓN GO =====
   window.go = function () {
     const q = input.value.trim();
     const qLower = q.toLowerCase();
 
     if (!q) return;
 
-    // feedback visual (IMPORTANTE)
-    input.style.background = "#222";
-
-    // Jake interno
+    // PERFIL JAKE
     if (qLower.includes("jake") || qLower.includes("chileno")) {
       showJake();
       return;
     }
 
-    // detectar URL aunque no tenga http
-    let url = q;
-    if (!qLower.startsWith("http")) {
-      if (q.includes(".")) {
-        url = "https://" + q;
-      } else {
-        // búsqueda externa en nueva pestaña
-        window.open(
-          "https://duckduckgo.com/?q=" + encodeURIComponent(q),
-          "_blank"
-        );
-        return;
-      }
+    // URL directa
+    if (qLower.startsWith("http://") || qLower.startsWith("https://")) {
+      loadIframe(q);
+      return;
     }
 
-    load(url);
+    // BÚSQUEDA → pestaña nueva (como navegador real)
+    window.open(
+      "https://duckduckgo.com/?q=" + encodeURIComponent(q),
+      "_blank"
+    );
   };
 
-  // ===== CARGAR URL =====
-  function load(url) {
+  function loadIframe(url) {
     jakeDiv.classList.add("hidden");
     iframe.style.display = "block";
-
     iframe.src = url;
 
     historyList = historyList.slice(0, index + 1);
     historyList.push(url);
     index++;
-
-    // si la página bloquea iframe, abrir fuera
-    setTimeout(() => {
-      try {
-        if (!iframe.contentWindow || iframe.contentWindow.length === 0) {
-          // muchas páginas bloquean iframe
-          console.warn("Iframe bloqueado, abriendo en nueva pestaña");
-          window.open(url, "_blank");
-        }
-      } catch (e) {
-        // acceso bloqueado → abrir fuera
-        window.open(url, "_blank");
-      }
-    }, 1500);
   }
 
-  // ===== PERFIL JAKE =====
   function showJake() {
     iframe.style.display = "none";
     jakeDiv.classList.remove("hidden");
-    jakeDiv.innerHTML = "<p>Cargando perfil…</p>";
 
-    fetch("jake.json")
-      .then(res => {
-        if (!res.ok) throw new Error("No se pudo cargar jake.json");
-        return res.json();
-      })
-      .then(data => {
-        jakeDiv.innerHTML = `
-          <h1>${data.name} (${data.alias})</h1>
-          <p>${data.description}</p>
+    jakeDiv.innerHTML = `
+      <h1>Jake (Chileno)</h1>
+      <p>Desarrollador, creador de mods, historias, apps y proyectos creativos.</p>
 
-          <h3>¿Qué hace?</h3>
-          <ul>${data.skills.map(s => `<li>${s}</li>`).join("")}</ul>
+      <h3>¿Qué hace?</h3>
+      <ul>
+        <li>Mods para Minecraft Bedrock</li>
+        <li>Apps Android con Sketchware</li>
+        <li>Lore e historias originales</li>
+        <li>Experimentos web</li>
+      </ul>
 
-          <h3>Proyectos</h3>
-          <ul>${data.projects.map(p => `<li>${p}</li>`).join("")}</ul>
-        `;
-      })
-      .catch(() => {
-        jakeDiv.innerHTML = "<p>Error cargando perfil.</p>";
-      });
+      <h3>Proyectos</h3>
+      <ul>
+        <li>Jake Browser</li>
+        <li>Mini IA Android</li>
+        <li>Mods MCPE</li>
+      </ul>
+    `;
   }
 
-  // ===== NAVEGACIÓN =====
   window.goBack = function () {
     if (index > 0) {
       index--;
@@ -116,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.reloadPage = function () {
-    iframe.src = iframe.src;
+    if (iframe.src) iframe.src = iframe.src;
   };
 
 });
