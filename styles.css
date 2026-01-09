@@ -42,3 +42,16 @@ iframe {
 #jake-info {
   padding: 20px;
 }
+
+#abuelo {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #111;
+  color: #aaa;
+  font-size: 12px;
+  text-align: center;
+  padding: 6px;
+  border-top: 1px solid #333;
+  font-style: italic;
+  }
