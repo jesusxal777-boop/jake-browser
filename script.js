@@ -7,50 +7,83 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("url");
   const jakeDiv = document.getElementById("jake-info");
 
-  // verificación visible (para que sepas que sí cargó)
   console.log("SCRIPT CARGADO OK");
   document.body.style.outline = "2px solid lime";
 
-  // búsqueda reciente SIEMPRE Jake
   input.value = "Jake";
 
+  // ===== BOTÓN GO =====
   window.go = function () {
-    let q = input.value.trim();
-    let qLower = q.toLowerCase();
+    const q = input.value.trim();
+    const qLower = q.toLowerCase();
 
-    // Jake / Chileno → perfil interno
+    if (!q) return;
+
+    // feedback visual (IMPORTANTE)
+    input.style.background = "#222";
+
+    // Jake interno
     if (qLower.includes("jake") || qLower.includes("chileno")) {
       showJake();
       return;
     }
 
-    // URL directa
-    if (qLower.startsWith("http")) {
-      load(q);
-    } else {
-      // búsqueda externa (nunca bloqueada)
-      location.href =
-        "https://duckduckgo.com/?q=" + encodeURIComponent(q);
+    // detectar URL aunque no tenga http
+    let url = q;
+    if (!qLower.startsWith("http")) {
+      if (q.includes(".")) {
+        url = "https://" + q;
+      } else {
+        // búsqueda externa en nueva pestaña
+        window.open(
+          "https://duckduckgo.com/?q=" + encodeURIComponent(q),
+          "_blank"
+        );
+        return;
+      }
     }
+
+    load(url);
   };
 
+  // ===== CARGAR URL =====
   function load(url) {
     jakeDiv.classList.add("hidden");
     iframe.style.display = "block";
+
     iframe.src = url;
 
     historyList = historyList.slice(0, index + 1);
     historyList.push(url);
     index++;
+
+    // si la página bloquea iframe, abrir fuera
+    setTimeout(() => {
+      try {
+        if (!iframe.contentWindow || iframe.contentWindow.length === 0) {
+          // muchas páginas bloquean iframe
+          console.warn("Iframe bloqueado, abriendo en nueva pestaña");
+          window.open(url, "_blank");
+        }
+      } catch (e) {
+        // acceso bloqueado → abrir fuera
+        window.open(url, "_blank");
+      }
+    }, 1500);
   }
 
+  // ===== PERFIL JAKE =====
   function showJake() {
-    fetch("jake.json")
-      .then(res => res.json())
-      .then(data => {
-        iframe.style.display = "none";
-        jakeDiv.classList.remove("hidden");
+    iframe.style.display = "none";
+    jakeDiv.classList.remove("hidden");
+    jakeDiv.innerHTML = "<p>Cargando perfil…</p>";
 
+    fetch("jake.json")
+      .then(res => {
+        if (!res.ok) throw new Error("No se pudo cargar jake.json");
+        return res.json();
+      })
+      .then(data => {
         jakeDiv.innerHTML = `
           <h1>${data.name} (${data.alias})</h1>
           <p>${data.description}</p>
@@ -61,9 +94,13 @@ document.addEventListener("DOMContentLoaded", () => {
           <h3>Proyectos</h3>
           <ul>${data.projects.map(p => `<li>${p}</li>`).join("")}</ul>
         `;
+      })
+      .catch(() => {
+        jakeDiv.innerHTML = "<p>Error cargando perfil.</p>";
       });
   }
 
+  // ===== NAVEGACIÓN =====
   window.goBack = function () {
     if (index > 0) {
       index--;
