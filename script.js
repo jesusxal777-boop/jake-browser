@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const iframe = document.getElementById("browser");
   const input = document.getElementById("url");
-  const page = document.getElementById("internal-page");
+  const page = document.getElementById("jake-info");
 
   console.log("Jake Browser listo");
 
+  // búsqueda inicial
   input.value = "Jake";
 
   /* ===== BUSCADOR ===== */
@@ -17,11 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const qLower = q.toLowerCase();
     if (!q) return;
 
+    // JAKE / CHILENO → VAPORWAVE
     if (qLower.includes("jake") || qLower.includes("chileno")) {
       loadJakeProfile();
       return;
     }
 
+    // MEME RESET → MEME
     if (
       qLower.includes("meme reset") ||
       qLower.includes("great meme reset") ||
@@ -31,11 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // URL directa
     if (qLower.startsWith("http://") || qLower.startsWith("https://")) {
       loadIframe(q);
       return;
     }
 
+    // búsqueda externa
     window.open(
       "https://duckduckgo.com/?q=" + encodeURIComponent(q),
       "_blank"
@@ -46,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function loadIframe(url) {
     resetPage();
     page.classList.add("hidden");
-    iframe.style.display = "block";
+    iframe.classList.remove("hidden");
     iframe.src = url;
 
     historyList = historyList.slice(0, index + 1);
@@ -54,14 +59,14 @@ document.addEventListener("DOMContentLoaded", () => {
     index++;
   }
 
-  /* ===== LIMPIAR PÁGINA ===== */
+  /* ===== LIMPIAR ESTILOS ===== */
   function resetPage() {
     page.classList.remove("vaporwave", "meme");
   }
 
   /* ===== JAKE (VAPORWAVE) ===== */
   function loadJakeProfile() {
-    iframe.style.display = "none";
+    iframe.classList.add("hidden");
     page.classList.remove("hidden");
     resetPage();
     page.classList.add("vaporwave");
@@ -88,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ===== MEME RESET (MEME) ===== */
   function showMemeReset() {
-    iframe.style.display = "none";
+    iframe.classList.add("hidden");
     page.classList.remove("hidden");
     resetPage();
     page.classList.add("meme");
