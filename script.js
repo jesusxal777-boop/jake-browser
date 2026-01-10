@@ -11,9 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Jake Browser listo");
 
   // Tema por defecto
-  setTheme("light");
+  setTheme("retro");
 
-  // Texto inicial
   input.value = "Jake";
 
   window.go = function () {
@@ -21,13 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const qLower = q.toLowerCase();
     if (!q) return;
 
-    // PERFIL JAKE (desde JSON)
+    // Jake / Chileno → VAPORWAVE
     if (qLower.includes("jake") || qLower.includes("chileno")) {
       loadJakeProfile();
       return;
     }
 
-    // MEME RESET
+    // Meme Reset → MEME
     if (
       qLower.includes("meme reset") ||
       qLower.includes("great meme reset") ||
@@ -43,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // búsqueda externa
+    // Búsqueda externa
     window.open(
       "https://duckduckgo.com/?q=" + encodeURIComponent(q),
       "_blank"
@@ -51,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   function loadIframe(url) {
+    setTheme("retro");
     jakeDiv.classList.add("hidden");
     iframe.style.display = "block";
     iframe.src = url;
@@ -60,36 +60,33 @@ document.addEventListener("DOMContentLoaded", () => {
     index++;
   }
 
-  /* ===== JAKE DESDE JSON ===== */
+  /* ===== JAKE (VAPORWAVE) ===== */
   function loadJakeProfile() {
+    setTheme("vaporwave");
     iframe.style.display = "none";
     jakeDiv.classList.remove("hidden");
 
     fetch("./jake.json")
       .then(res => res.json())
       .then(data => {
-        let html = `
+        jakeDiv.innerHTML = `
           <img src="${data.image}" class="jake-img">
           <h1>${data.name}</h1>
           <p>${data.description}</p>
           <h3>¿Qué hace?</h3>
-          <ul>
-            ${data.skills.map(s => `<li>${s}</li>`).join("")}
-          </ul>
+          <ul>${data.skills.map(s => `<li>${s}</li>`).join("")}</ul>
           <h3>Proyectos</h3>
-          <ul>
-            ${data.projects.map(p => `<li>${p}</li>`).join("")}
-          </ul>
+          <ul>${data.projects.map(p => `<li>${p}</li>`).join("")}</ul>
         `;
-        jakeDiv.innerHTML = html;
       })
-      .catch(err => {
-        jakeDiv.innerHTML = `<p>Error cargando perfil: ${err.message}</p>`;
+      .catch(() => {
+        jakeDiv.innerHTML = "<p>Error cargando perfil</p>";
       });
   }
 
-  /* ===== MEME RESET ===== */
+  /* ===== MEME RESET (MEME) ===== */
   function showMemeReset() {
+    setTheme("meme");
     iframe.style.display = "none";
     jakeDiv.classList.remove("hidden");
 
@@ -115,8 +112,8 @@ document.addEventListener("DOMContentLoaded", () => {
         html += "</div>";
         jakeDiv.innerHTML = html;
       })
-      .catch(err => {
-        jakeDiv.innerHTML = `<p>Error cargando memes</p>`;
+      .catch(() => {
+        jakeDiv.innerHTML = "<p>Error cargando memes</p>";
       });
   }
 
@@ -133,25 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (iframe.src) iframe.src = iframe.src;
   };
 
-  /* ===== MENÚ IZQUIERDA ===== */
-  window.toggleMenu = () => {
-    sideMenu.classList.toggle("open");
-  };
-
-  window.changeTheme = (theme) => {
-    setTheme(theme);
-    toggleMenu();
-  };
-
   function setTheme(theme) {
-    document.body.classList.remove(
-      "light","retro","meme","vaporwave","matrix"
-    );
+    document.body.classList.remove("retro", "meme", "vaporwave");
     document.body.classList.add(theme);
-    localStorage.setItem("jakeBrowserTheme", theme);
   }
-
-  const savedTheme = localStorage.getItem("jakeBrowserTheme");
-  if (savedTheme) setTheme(savedTheme);
 
 });
