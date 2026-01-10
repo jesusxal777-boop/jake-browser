@@ -6,27 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const iframe = document.getElementById("browser");
   const input = document.getElementById("url");
   const jakeDiv = document.getElementById("jake-info");
-  const sideMenu = document.getElementById("side-menu");
 
   console.log("Jake Browser listo");
 
-  // Tema por defecto
-  setTheme("retro");
-
+  // búsqueda reciente
   input.value = "Jake";
 
+  /* ===== BUSCADOR ===== */
   window.go = function () {
     const q = input.value.trim();
     const qLower = q.toLowerCase();
     if (!q) return;
 
-    // Jake / Chileno → VAPORWAVE
+    // JAKE / CHILENO → VAPORWAVE
     if (qLower.includes("jake") || qLower.includes("chileno")) {
       loadJakeProfile();
       return;
     }
 
-    // Meme Reset → MEME
+    // MEME RESET → MEME
     if (
       qLower.includes("meme reset") ||
       qLower.includes("great meme reset") ||
@@ -42,15 +40,16 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Búsqueda externa
+    // búsqueda externa
     window.open(
       "https://duckduckgo.com/?q=" + encodeURIComponent(q),
       "_blank"
     );
   };
 
+  /* ===== IFRAME (RETRO) ===== */
   function loadIframe(url) {
-    setTheme("retro");
+    resetInfoTheme();
     jakeDiv.classList.add("hidden");
     iframe.style.display = "block";
     iframe.src = url;
@@ -60,11 +59,17 @@ document.addEventListener("DOMContentLoaded", () => {
     index++;
   }
 
+  /* ===== LIMPIAR TEMA INFO ===== */
+  function resetInfoTheme() {
+    jakeDiv.classList.remove("vaporwave", "meme");
+  }
+
   /* ===== JAKE (VAPORWAVE) ===== */
   function loadJakeProfile() {
-    setTheme("vaporwave");
     iframe.style.display = "none";
     jakeDiv.classList.remove("hidden");
+    resetInfoTheme();
+    jakeDiv.classList.add("vaporwave");
 
     fetch("./jake.json")
       .then(res => res.json())
@@ -73,8 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
           <img src="${data.image}" class="jake-img">
           <h1>${data.name}</h1>
           <p>${data.description}</p>
+
           <h3>¿Qué hace?</h3>
           <ul>${data.skills.map(s => `<li>${s}</li>`).join("")}</ul>
+
           <h3>Proyectos</h3>
           <ul>${data.projects.map(p => `<li>${p}</li>`).join("")}</ul>
         `;
@@ -86,9 +93,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ===== MEME RESET (MEME) ===== */
   function showMemeReset() {
-    setTheme("meme");
     iframe.style.display = "none";
     jakeDiv.classList.remove("hidden");
+    resetInfoTheme();
+    jakeDiv.classList.add("meme");
 
     fetch("./meme-reset.json")
       .then(res => res.json())
@@ -118,21 +126,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ===== NAVEGACIÓN ===== */
-  window.goBack = () => {
+  window.goBack = function () {
     if (index > 0) iframe.src = historyList[--index];
   };
 
-  window.goForward = () => {
+  window.goForward = function () {
     if (index < historyList.length - 1) iframe.src = historyList[++index];
   };
 
-  window.reloadPage = () => {
+  window.reloadPage = function () {
     if (iframe.src) iframe.src = iframe.src;
   };
-
-  function setTheme(theme) {
-    document.body.classList.remove("retro", "meme", "vaporwave");
-    document.body.classList.add(theme);
-  }
 
 });
