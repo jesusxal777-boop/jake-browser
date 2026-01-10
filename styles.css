@@ -1,4 +1,4 @@
-/* ===== BASE RETRO (DEFAULT) ===== */
+/* ===== BASE RETRO (SIEMPRE) ===== */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -29,6 +29,11 @@ iframe {
   height: calc(100vh - 90px);
   border: none;
   background: white;
+  display: block;
+}
+
+iframe.hidden {
+  display: none;
 }
 
 .hidden {
@@ -42,27 +47,26 @@ iframe {
   color: #666;
 }
 
-/* ===== CONTENEDOR INTERNO ===== */
-#internal-page {
+/* ===== CONTENIDO INTERNO ===== */
+#jake-info {
   padding: 20px;
   min-height: calc(100vh - 90px);
-  background: #eaeaea;
   transition: all 0.3s;
 }
 
 /* ===== VAPORWAVE (JAKE) ===== */
-#internal-page.vaporwave {
+#jake-info.vaporwave {
   background: linear-gradient(135deg, #ff9cf0, #7cd1f0);
   color: white;
 }
 
-#internal-page.vaporwave h1,
-#internal-page.vaporwave h3 {
+#jake-info.vaporwave h1,
+#jake-info.vaporwave h3 {
   color: #fff;
 }
 
 /* ===== MEME RESET ===== */
-#internal-page.meme {
+#jake-info.meme {
   background: #fffa00;
   color: #111;
   font-family: "Comic Sans MS", cursive, sans-serif;
