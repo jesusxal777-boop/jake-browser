@@ -5,11 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const iframe = document.getElementById("browser");
   const input = document.getElementById("url");
-  const page = document.getElementById("jake-info");
+  const jakeDiv = document.getElementById("jake-info");
 
   console.log("Jake Browser listo");
 
-  // búsqueda inicial
+  // Valor inicial
   input.value = "Jake";
 
   /* ===== BUSCADOR ===== */
@@ -21,6 +21,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // JAKE / CHILENO → VAPORWAVE
     if (qLower.includes("jake") || qLower.includes("chileno")) {
       loadJakeProfile();
+      return;
+    }
+
+    // SANTI / TAILS / MILES → VAPORWAVE
+    if (
+      qLower.includes("santi") ||
+      qLower.includes("santicraft") ||
+      qLower.includes("miles") ||
+      qLower.includes("tails")
+    ) {
+      loadSantiProfile();
       return;
     }
 
@@ -40,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // búsqueda externa
+    // Búsqueda externa
     window.open(
       "https://duckduckgo.com/?q=" + encodeURIComponent(q),
       "_blank"
@@ -49,9 +60,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ===== IFRAME (RETRO) ===== */
   function loadIframe(url) {
-    resetPage();
-    page.classList.add("hidden");
-    iframe.classList.remove("hidden");
+    resetInfoTheme();
+    jakeDiv.classList.add("hidden");
+    iframe.style.display = "block";
     iframe.src = url;
 
     historyList = historyList.slice(0, index + 1);
@@ -59,22 +70,22 @@ document.addEventListener("DOMContentLoaded", () => {
     index++;
   }
 
-  /* ===== LIMPIAR ESTILOS ===== */
-  function resetPage() {
-    page.classList.remove("vaporwave", "meme");
+  /* ===== LIMPIAR TEMA INTERNO ===== */
+  function resetInfoTheme() {
+    jakeDiv.classList.remove("vaporwave", "meme");
   }
 
   /* ===== JAKE (VAPORWAVE) ===== */
   function loadJakeProfile() {
-    iframe.classList.add("hidden");
-    page.classList.remove("hidden");
-    resetPage();
-    page.classList.add("vaporwave");
+    iframe.style.display = "none";
+    jakeDiv.classList.remove("hidden");
+    resetInfoTheme();
+    jakeDiv.classList.add("vaporwave");
 
     fetch("./jake.json")
       .then(res => res.json())
       .then(data => {
-        page.innerHTML = `
+        jakeDiv.innerHTML = `
           <img src="${data.image}" class="jake-img">
           <h1>${data.name}</h1>
           <p>${data.description}</p>
@@ -87,16 +98,46 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
       })
       .catch(() => {
-        page.innerHTML = "<p>Error cargando perfil</p>";
+        jakeDiv.innerHTML = "<p>Error cargando perfil de Jake</p>";
+      });
+  }
+
+  /* ===== SANTI / TAILS (VAPORWAVE) ===== */
+  function loadSantiProfile() {
+    iframe.style.display = "none";
+    jakeDiv.classList.remove("hidden");
+    resetInfoTheme();
+    jakeDiv.classList.add("vaporwave");
+
+    fetch("./santi.json")
+      .then(res => res.json())
+      .then(data => {
+        jakeDiv.innerHTML = `
+          <img src="${data.image}" class="jake-img">
+          <h1>${data.name}</h1>
+          <p>${data.description}</p>
+
+          <h3>Personaje</h3>
+          <img src="${data.characterImage}" class="jake-img">
+
+          <h3>Habilidades</h3>
+          <ul>${data.skills.map(s => `<li>${s}</li>`).join("")}</ul>
+
+          <h3>Proyectos</h3>
+          <ul>${data.projects.map(p => `<li>${p}</li>`).join("")}</ul>
+        `;
+      })
+      .catch(() => {
+        jakeDiv.innerHTML = "<p>Error cargando perfil de Santicraft</p>";
       });
   }
 
   /* ===== MEME RESET (MEME) ===== */
   function showMemeReset() {
-    iframe.classList.add("hidden");
-    page.classList.remove("hidden");
-    resetPage();
-    page.classList.add("meme");
+    iframe.style.display = "none";
+    jakeDiv.classList.remove("hidden");
+    resetInfoTheme();
+    jakeDiv.classList.add("meme");
 
     fetch("./meme-reset.json")
       .then(res => res.json())
@@ -118,23 +159,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         html += "</div>";
-        page.innerHTML = html;
+        jakeDiv.innerHTML = html;
       })
       .catch(() => {
-        page.innerHTML = "<p>Error cargando memes</p>";
+        jakeDiv.innerHTML = "<p>Error cargando memes</p>";
       });
   }
 
   /* ===== NAVEGACIÓN ===== */
-  window.goBack = () => {
+  window.goBack = function () {
     if (index > 0) iframe.src = historyList[--index];
   };
 
-  window.goForward = () => {
+  window.goForward = function () {
     if (index < historyList.length - 1) iframe.src = historyList[++index];
   };
 
-  window.reloadPage = () => {
+  window.reloadPage = function () {
     if (iframe.src) iframe.src = iframe.src;
   };
 
