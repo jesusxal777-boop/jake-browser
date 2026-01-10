@@ -5,38 +5,37 @@
   <title>Jake Browser</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="light">
 
-<div class="top">
-  <button onclick="goBack()">⬅</button>
-  <button onclick="goForward()">➡</button>
-  <button onclick="reloadPage()">⟳</button>
+  <!-- Menú lateral -->
+  <div id="side-menu" class="side-menu">
+    <h3>🎨 Temas</h3>
+    <button onclick="changeTheme('light')">Light</button>
+    <button onclick="changeTheme('retro')">Retro</button>
+    <button onclick="changeTheme('meme')">Meme</button>
+    <button onclick="changeTheme('vaporwave')">Vaporwave</button>
+    <button onclick="changeTheme('matrix')">Matrix</button>
+  </div>
 
-  <input id="url" placeholder="Buscar o escribir URL" />
-  <button type="button" onclick="go()">GO</button>
+  <!-- Barra superior -->
+  <div class="top">
+    <div class="menu-hamburguesa" onclick="toggleMenu()">☰</div>
 
-  <!-- Menú hamburguesa -->
-  <div class="menu-hamburguesa" onclick="toggleMenu()">☰</div>
-</div>
+    <button onclick="goBack()">⬅</button>
+    <button onclick="goForward()">➡</button>
+    <button onclick="reloadPage()">⟳</button>
 
-<!-- Panel lateral -->
-<div id="side-menu" class="side-menu hidden">
-  <h3>Opciones</h3>
-  <button onclick="changeTheme('light')">Tema Light (Default)</button>
-  <button onclick="changeTheme('retro')">Tema Retro</button>
-  <button onclick="changeTheme('meme')">Tema Meme</button>
-  <button onclick="changeTheme('vaporwave')">Tema Vaporwave</button>
-  <button onclick="changeTheme('matrix')">Tema Matrix</button>
-</div>
+    <input id="url" placeholder="Buscar o escribir URL">
+    <button onclick="go()">GO</button>
+  </div>
 
-<iframe id="browser"></iframe>
+  <iframe id="browser"></iframe>
+  <div id="jake-info" class="hidden"></div>
 
-<div id="jake-info" class="hidden"></div>
+  <div id="abuelo">
+    🧓 “Así antes era Google… tan simple.”
+  </div>
 
-<div id="abuelo">
-  🧓 “Así antes era Google… tan simple.”
-</div>
-
-<script src="script.js?v=5"></script>
+  <script src="script.js"></script>
 </body>
 </html>
