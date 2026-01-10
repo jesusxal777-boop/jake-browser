@@ -1,15 +1,11 @@
-/* =====================
-   BASE
-===================== */
+/* ===== BASE RETRO (SIEMPRE) ===== */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  transition: background 0.4s, color 0.4s;
+  background: #f0f0f0;
+  color: #222;
 }
 
-/* =====================
-   TOP BAR
-===================== */
 .top {
   display: flex;
   gap: 5px;
@@ -21,18 +17,13 @@ body {
 
 input {
   flex: 1;
-  padding: 6px;
-  font-size: 14px;
+  padding: 5px;
 }
 
 button {
-  padding: 6px 10px;
   cursor: pointer;
 }
 
-/* =====================
-   IFRAME
-===================== */
 iframe {
   width: 100%;
   height: calc(100vh - 90px);
@@ -40,86 +31,68 @@ iframe {
   background: white;
 }
 
-/* =====================
-   UTILIDADES
-===================== */
 .hidden {
   display: none;
-}
-
-#jake-info {
-  padding: 20px;
 }
 
 #abuelo {
   text-align: center;
   padding: 6px;
   font-size: 12px;
-  color: #aaa;
+  color: #666;
 }
 
-/* =====================
-   JAKE / PERFIL
-===================== */
-.jake-img {
-  width: 130px;
-  height: auto;
-  float: left;
-  margin-right: 15px;
-  border-radius: 10px;
+/* ===== CONTENEDOR DE INFO ===== */
+#jake-info {
+  padding: 20px;
+  min-height: calc(100vh - 90px);
+  transition: all 0.3s;
 }
 
-/* =====================
-   MEME RESET
-===================== */
+/* ===== VAPORWAVE (JAKE) ===== */
+#jake-info.vaporwave {
+  background: linear-gradient(135deg, #ff9cf0, #7cd1f0);
+  color: white;
+}
+
+#jake-info.vaporwave h1,
+#jake-info.vaporwave h3 {
+  color: #fff;
+}
+
+/* ===== MEME RESET ===== */
+#jake-info.meme {
+  background: #fffa00;
+  color: #111;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+/* ===== MEMES ===== */
 .meme-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   margin-top: 20px;
 }
 
 .meme-card {
   width: 150px;
   text-align: center;
-  background: rgba(0,0,0,0.6);
+  background: #222;
+  color: white;
   padding: 10px;
   border-radius: 8px;
 }
 
 .meme-card img {
   width: 100%;
-  height: auto;
   border-radius: 4px;
 }
 
-/* =====================
-   TEMAS
-===================== */
-
-/* RETRO (default) */
-body.retro {
-  background: #f0f0f0;
-  color: #222;
-}
-
-/* MEME RESET */
-body.meme {
-  background: #fffa00;
-  color: #111;
-}
-
-body.meme .meme-card {
-  background: #222;
-  color: white;
-}
-
-/* VAPORWAVE (Jake / Chileno) */
-body.vaporwave {
-  background: linear-gradient(135deg, #ff9cf0, #7cd1f0);
-  color: white;
-}
-
-body.vaporwave a {
-  color: #fff;
+/* ===== JAKE ===== */
+.jake-img {
+  width: 120px;
+  float: left;
+  margin-right: 15px;
+  border-radius: 8px;
 }
