@@ -1,0 +1,17 @@
+{
+  "name": "Santicraft / Miles / Tails",
+  "image": "./images/santi/canal.png",
+  "characterImage": "./images/santi/roblox.png",
+  "description": "Creador de contenido, fan de Roblox y Minecraft. Conocido como Santicraft, Miles o Tails.",
+  "skills": [
+    "Roblox",
+    "Minecraft",
+    "Edición básica",
+    "Creatividad"
+  ],
+  "projects": [
+    "Canal de YouTube",
+    "Personaje en Roblox",
+    "Colaboraciones con Jake"
+  ]
+}
