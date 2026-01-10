@@ -5,22 +5,10 @@
   <title>Jake Browser</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="light">
-
-  <!-- Menú lateral -->
-  <div id="side-menu" class="side-menu">
-    <h3>🎨 Temas</h3>
-    <button onclick="changeTheme('light')">Light</button>
-    <button onclick="changeTheme('retro')">Retro</button>
-    <button onclick="changeTheme('meme')">Meme</button>
-    <button onclick="changeTheme('vaporwave')">Vaporwave</button>
-    <button onclick="changeTheme('matrix')">Matrix</button>
-  </div>
+<body>
 
   <!-- Barra superior -->
   <div class="top">
-    <div class="menu-hamburguesa" onclick="toggleMenu()">☰</div>
-
     <button onclick="goBack()">⬅</button>
     <button onclick="goForward()">➡</button>
     <button onclick="reloadPage()">⟳</button>
@@ -29,9 +17,13 @@
     <button onclick="go()">GO</button>
   </div>
 
+  <!-- Navegador -->
   <iframe id="browser"></iframe>
+
+  <!-- Contenido interno (Jake / Meme Reset) -->
   <div id="jake-info" class="hidden"></div>
 
+  <!-- Footer -->
   <div id="abuelo">
     🧓 “Así antes era Google… tan simple.”
   </div>
