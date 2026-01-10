@@ -1,52 +1,48 @@
-/* BASE + VARIABLES */
+/* =====================
+   BASE
+===================== */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-
-  --bg: #fff;
-  --text: #111;
-  --top-bg: #eaeaea;
-  --card-bg: #ddd;
-  --accent: #007bff;
-
-  background: var(--bg);
-  color: var(--text);
-  transition: all 0.3s ease;
+  transition: background 0.4s, color 0.4s;
 }
 
-/* TOP BAR */
+/* =====================
+   TOP BAR
+===================== */
 .top {
   display: flex;
-  align-items: center;
   gap: 5px;
   padding: 8px;
-  background: var(--top-bg);
-}
-
-.menu-hamburguesa {
-  font-size: 26px;
-  cursor: pointer;
-  padding: 0 10px;
+  background: #222;
+  color: white;
+  align-items: center;
 }
 
 input {
   flex: 1;
-  padding: 5px;
+  padding: 6px;
+  font-size: 14px;
 }
 
 button {
+  padding: 6px 10px;
   cursor: pointer;
 }
 
-/* IFRAME */
+/* =====================
+   IFRAME
+===================== */
 iframe {
   width: 100%;
   height: calc(100vh - 90px);
   border: none;
-  background: var(--bg);
+  background: white;
 }
 
-/* CONTENIDO INTERNO */
+/* =====================
+   UTILIDADES
+===================== */
 .hidden {
   display: none;
 }
@@ -62,93 +58,68 @@ iframe {
   color: #aaa;
 }
 
-/* MEMES */
+/* =====================
+   JAKE / PERFIL
+===================== */
+.jake-img {
+  width: 130px;
+  height: auto;
+  float: left;
+  margin-right: 15px;
+  border-radius: 10px;
+}
+
+/* =====================
+   MEME RESET
+===================== */
 .meme-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   margin-top: 20px;
 }
 
 .meme-card {
   width: 150px;
   text-align: center;
-  background: var(--card-bg);
+  background: rgba(0,0,0,0.6);
   padding: 10px;
   border-radius: 8px;
 }
 
 .meme-card img {
   width: 100%;
+  height: auto;
   border-radius: 4px;
 }
 
-/* IMAGEN JAKE */
-.jake-img {
-  width: 120px;
-  float: left;
-  margin-right: 15px;
-  border-radius: 8px;
-}
+/* =====================
+   TEMAS
+===================== */
 
-/* MENÚ LATERAL (IZQUIERDA) */
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: -260px;
-  width: 260px;
-  height: 100%;
-  background: var(--top-bg);
-  padding: 20px;
-  transition: left 0.3s ease;
-  z-index: 1000;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.side-menu.active {
-  left: 0;
-}
-
-.side-menu button {
-  padding: 8px;
-}
-
-/* TEMAS */
-body.light {
-  --bg: #ffffff;
-  --text: #111;
-  --top-bg: #eaeaea;
-  --card-bg: #ddd;
-  --accent: #007bff;
-}
-
+/* RETRO (default) */
 body.retro {
-  --bg: #f0f0f0;
-  --text: #222;
-  --top-bg: #c0c0c0;
-  --card-bg: #e0e0e0;
+  background: #f0f0f0;
+  color: #222;
 }
 
+/* MEME RESET */
 body.meme {
-  --bg: #fffa00;
-  --text: #000;
-  --top-bg: #ff00ff;
-  --card-bg: #00ff00;
+  background: #fffa00;
+  color: #111;
 }
 
+body.meme .meme-card {
+  background: #222;
+  color: white;
+}
+
+/* VAPORWAVE (Jake / Chileno) */
 body.vaporwave {
-  --bg: linear-gradient(135deg, #ff9cf0, #7cd1f0);
-  --text: #fff;
-  --top-bg: rgba(0,0,0,0.3);
-  --card-bg: rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, #ff9cf0, #7cd1f0);
+  color: white;
 }
 
-body.matrix {
-  --bg: #000;
-  --text: #00ff00;
-  --top-bg: #001100;
-  --card-bg: #002200;
+body.vaporwave a {
+  color: #fff;
 }
