@@ -1,9 +1,12 @@
-/* ===== BASE RETRO (SIEMPRE) ===== */
+/* ===== ESTRUCTURA ===== */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: #f0f0f0;
   color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .top {
@@ -15,89 +18,35 @@ body {
   align-items: center;
 }
 
-input {
-  flex: 1;
-  padding: 5px;
+#content {
+  flex: 1; /* ← ESTA ES LA CLAVE */
+  position: relative;
 }
 
-button {
-  cursor: pointer;
-}
-
+/* ===== IFRAME ===== */
 iframe {
   width: 100%;
-  height: calc(100vh - 90px);
+  height: 100%;
   border: none;
   background: white;
-  display: block;
-}
-
-iframe.hidden {
-  display: none;
-}
-
-.hidden {
-  display: none;
-}
-
-#abuelo {
-  text-align: center;
-  padding: 6px;
-  font-size: 12px;
-  color: #666;
 }
 
 /* ===== CONTENIDO INTERNO ===== */
 #jake-info {
   padding: 20px;
-  min-height: calc(100vh - 90px);
-  transition: all 0.3s;
+  min-height: 100%;
 }
 
-/* ===== VAPORWAVE (JAKE) ===== */
-#jake-info.vaporwave {
-  background: linear-gradient(135deg, #ff9cf0, #7cd1f0);
-  color: white;
-}
-
-#jake-info.vaporwave h1,
-#jake-info.vaporwave h3 {
-  color: #fff;
-}
-
-/* ===== MEME RESET ===== */
-#jake-info.meme {
-  background: #fffa00;
-  color: #111;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-}
-
-/* ===== MEMES ===== */
-.meme-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.meme-card {
-  width: 150px;
+/* ===== FOOTER ===== */
+#abuelo {
   text-align: center;
-  background: #222;
-  color: white;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 6px;
+  font-size: 12px;
+  color: #666;
+  background: #e0e0e0;
 }
 
-.meme-card img {
-  width: 100%;
-  border-radius: 4px;
-}
-
-/* ===== JAKE ===== */
-.jake-img {
-  width: 120px;
-  float: left;
-  margin-right: 15px;
-  border-radius: 8px;
+/* ===== UTILIDAD ===== */
+.hidden {
+  display: none;
 }
