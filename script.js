@@ -10,32 +10,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
   console.log("Jake Browser listo");
 
-  // Tema guardado o default
-  const savedTheme = localStorage.getItem("jakeBrowserTheme") || "light";
-  setTheme(savedTheme);
+  // Tema por defecto
+  setTheme("light");
 
+  // Texto inicial
   input.value = "Jake";
 
   window.go = function () {
-    const q = input.value.trim().toLowerCase();
+    const q = input.value.trim();
+    const qLower = q.toLowerCase();
     if (!q) return;
 
-    if (q.includes("jake") || q.includes("chileno")) {
-      showJake();
+    // PERFIL JAKE (desde JSON)
+    if (qLower.includes("jake") || qLower.includes("chileno")) {
+      loadJakeProfile();
       return;
     }
 
-    if (q.includes("meme reset")) {
+    // MEME RESET
+    if (
+      qLower.includes("meme reset") ||
+      qLower.includes("great meme reset") ||
+      qLower.includes("reset de memes")
+    ) {
       showMemeReset();
       return;
     }
 
-    if (q.startsWith("http")) {
-      loadIframe(input.value);
+    // URL directa
+    if (qLower.startsWith("http://") || qLower.startsWith("https://")) {
+      loadIframe(q);
       return;
     }
 
-    window.open("https://duckduckgo.com/?q=" + encodeURIComponent(input.value), "_blank");
+    // búsqueda externa
+    window.open(
+      "https://duckduckgo.com/?q=" + encodeURIComponent(q),
+      "_blank"
+    );
   };
 
   function loadIframe(url) {
@@ -48,54 +60,98 @@ document.addEventListener("DOMContentLoaded", () => {
     index++;
   }
 
-  function showJake() {
+  /* ===== JAKE DESDE JSON ===== */
+  function loadJakeProfile() {
     iframe.style.display = "none";
     jakeDiv.classList.remove("hidden");
 
-    jakeDiv.innerHTML = `
-      <img src="images/jake.png" class="jake-img">
-      <h1>Jake (Chileno)</h1>
-      <p>Desarrollador, creador de mods, historias, apps y proyectos creativos.</p>
-    `;
+    fetch("./jake.json")
+      .then(res => res.json())
+      .then(data => {
+        let html = `
+          <img src="${data.image}" class="jake-img">
+          <h1>${data.name}</h1>
+          <p>${data.description}</p>
+          <h3>¿Qué hace?</h3>
+          <ul>
+            ${data.skills.map(s => `<li>${s}</li>`).join("")}
+          </ul>
+          <h3>Proyectos</h3>
+          <ul>
+            ${data.projects.map(p => `<li>${p}</li>`).join("")}
+          </ul>
+        `;
+        jakeDiv.innerHTML = html;
+      })
+      .catch(err => {
+        jakeDiv.innerHTML = `<p>Error cargando perfil: ${err.message}</p>`;
+      });
   }
 
+  /* ===== MEME RESET ===== */
   function showMemeReset() {
     iframe.style.display = "none";
     jakeDiv.classList.remove("hidden");
 
     fetch("./meme-reset.json")
-      .then(r => r.json())
+      .then(res => res.json())
       .then(data => {
-        let html = `<h1>${data.title}</h1><p>${data.description}</p><div class="meme-grid">`;
+        let html = `
+          <h1>🌀 ${data.title}</h1>
+          <p>${data.description}</p>
+          <div class="meme-grid">
+        `;
+
         data.memes.forEach(m => {
           html += `
             <div class="meme-card">
-              <img src="${m.image}">
+              <img src="${m.image}" onerror="this.src='./images/memes/missing.png'">
               <h4>${m.title}</h4>
               <span>${m.year}</span>
-            </div>`;
+            </div>
+          `;
         });
+
         html += "</div>";
         jakeDiv.innerHTML = html;
+      })
+      .catch(err => {
+        jakeDiv.innerHTML = `<p>Error cargando memes</p>`;
       });
   }
 
-  window.goBack = () => { if (index > 0) iframe.src = historyList[--index]; };
-  window.goForward = () => { if (index < historyList.length - 1) iframe.src = historyList[++index]; };
-  window.reloadPage = () => iframe.src && (iframe.src = iframe.src);
-
-  window.toggleMenu = function () {
-    sideMenu.classList.toggle("active");
+  /* ===== NAVEGACIÓN ===== */
+  window.goBack = () => {
+    if (index > 0) iframe.src = historyList[--index];
   };
 
-  window.changeTheme = function (theme) {
+  window.goForward = () => {
+    if (index < historyList.length - 1) iframe.src = historyList[++index];
+  };
+
+  window.reloadPage = () => {
+    if (iframe.src) iframe.src = iframe.src;
+  };
+
+  /* ===== MENÚ IZQUIERDA ===== */
+  window.toggleMenu = () => {
+    sideMenu.classList.toggle("open");
+  };
+
+  window.changeTheme = (theme) => {
     setTheme(theme);
     toggleMenu();
   };
 
   function setTheme(theme) {
-    document.body.className = theme;
+    document.body.classList.remove(
+      "light","retro","meme","vaporwave","matrix"
+    );
+    document.body.classList.add(theme);
     localStorage.setItem("jakeBrowserTheme", theme);
   }
+
+  const savedTheme = localStorage.getItem("jakeBrowserTheme");
+  if (savedTheme) setTheme(savedTheme);
 
 });
