@@ -1,19 +1,32 @@
+/* BASE + VARIABLES */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #fff;
-  color: #111;
-  transition: all 0.3s;
+
+  --bg: #fff;
+  --text: #111;
+  --top-bg: #eaeaea;
+  --card-bg: #ddd;
+  --accent: #007bff;
+
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.3s ease;
 }
 
+/* TOP BAR */
 .top {
   display: flex;
+  align-items: center;
   gap: 5px;
   padding: 8px;
-  background: #222;
-  color: white;
-  align-items: center;
-  position: relative;
+  background: var(--top-bg);
+}
+
+.menu-hamburguesa {
+  font-size: 26px;
+  cursor: pointer;
+  padding: 0 10px;
 }
 
 input {
@@ -25,13 +38,15 @@ button {
   cursor: pointer;
 }
 
+/* IFRAME */
 iframe {
   width: 100%;
   height: calc(100vh - 90px);
   border: none;
-  background: white;
+  background: var(--bg);
 }
 
+/* CONTENIDO INTERNO */
 .hidden {
   display: none;
 }
@@ -47,7 +62,7 @@ iframe {
   color: #aaa;
 }
 
-/* Meme Reset */
+/* MEMES */
 .meme-grid {
   display: flex;
   flex-wrap: wrap;
@@ -58,75 +73,82 @@ iframe {
 .meme-card {
   width: 150px;
   text-align: center;
-  background: #222;
+  background: var(--card-bg);
   padding: 10px;
   border-radius: 8px;
 }
 
 .meme-card img {
   width: 100%;
-  height: auto;
   border-radius: 4px;
 }
 
+/* IMAGEN JAKE */
 .jake-img {
   width: 120px;
-  height: auto;
   float: left;
   margin-right: 15px;
   border-radius: 8px;
 }
 
-/* Menú lateral */
-.menu-hamburguesa {
-  font-size: 24px;
-  cursor: pointer;
-  padding: 0 10px;
-}
-
+/* MENÚ LATERAL (IZQUIERDA) */
 .side-menu {
   position: fixed;
   top: 0;
-  right: -250px;
-  width: 250px;
+  left: -260px;
+  width: 260px;
   height: 100%;
-  background: #333;
-  color: white;
+  background: var(--top-bg);
   padding: 20px;
-  transition: right 0.3s;
-  z-index: 100;
+  transition: left 0.3s ease;
+  z-index: 1000;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.side-menu button {
-  padding: 8px;
-  cursor: pointer;
+.side-menu.active {
+  left: 0;
 }
 
-/* Temas */
+.side-menu button {
+  padding: 8px;
+}
+
+/* TEMAS */
 body.light {
-  background: #fff;
-  color: #111;
+  --bg: #ffffff;
+  --text: #111;
+  --top-bg: #eaeaea;
+  --card-bg: #ddd;
+  --accent: #007bff;
 }
 
 body.retro {
-  background: #f0f0f0;
-  color: #222;
+  --bg: #f0f0f0;
+  --text: #222;
+  --top-bg: #c0c0c0;
+  --card-bg: #e0e0e0;
 }
 
 body.meme {
-  background: #fffa00;
-  color: #111;
+  --bg: #fffa00;
+  --text: #000;
+  --top-bg: #ff00ff;
+  --card-bg: #00ff00;
 }
 
 body.vaporwave {
-  background: linear-gradient(135deg, #ff9cf0, #7cd1f0);
-  color: white;
+  --bg: linear-gradient(135deg, #ff9cf0, #7cd1f0);
+  --text: #fff;
+  --top-bg: rgba(0,0,0,0.3);
+  --card-bg: rgba(0,0,0,0.25);
 }
 
 body.matrix {
-  background: #000;
-  color: #00ff00;
+  --bg: #000;
+  --text: #00ff00;
+  --top-bg: #001100;
+  --card-bg: #002200;
 }
